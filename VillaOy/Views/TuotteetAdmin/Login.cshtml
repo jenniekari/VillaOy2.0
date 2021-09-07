@@ -1,0 +1,59 @@
+﻿@model VillaOy.Models.Logins
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Sisäänkirjautuminen</h2>
+
+@using (Html.BeginForm("Authorize", "TuotteetAdmin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.LoginId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserName, "Käyttäjä", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PassWord, "Salasana", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PassWord, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PassWord, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <label class="text-danger">
+            @Html.DisplayFor(model => model.ErrorMessage, new { @class = "control-label col-md-2 text-danger" })
+        </label>
+
+        @*
+            <div class="form-group">
+                @Html.LabelFor(model => model.ErrorMessage, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ErrorMessage, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ErrorMessage, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Kirjaudu" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<br />
+
+<div>
+    @Html.ActionLink("Takaisin etusivulle", "Index", "Home")
+</div>

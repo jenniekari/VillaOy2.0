@@ -1,0 +1,57 @@
+﻿@model VillaOy.Models.Tilaukset
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Tilauksen lisätiedot</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Toimitusosoite)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Toimitusosoite)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tilauspvm)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tilauspvm)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Toimituspvm)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Toimituspvm)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Asiakkaat.Nimi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Asiakkaat.Nimi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Postitoimipaikat.Postitoimipaikka)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Postitoimipaikat.Postitoimipaikka)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Muokkaa", "Edit", new { id = Model.TilausID }) |
+    @Html.ActionLink("Takaisin listaan", "Index")
+</p>

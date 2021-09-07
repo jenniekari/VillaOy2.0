@@ -1,0 +1,62 @@
+﻿@model VillaOy.Models.Tilaukset
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Poista tilaus</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Toimitusosoite)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Toimitusosoite)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tilauspvm)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tilauspvm)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Toimituspvm)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Toimituspvm)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Asiakkaat.Nimi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Asiakkaat.Nimi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Postitoimipaikat.Postitoimipaikka)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Postitoimipaikat.Postitoimipaikka)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("Takaisin listaan", "Index")
+        </div>
+    }
+</div>

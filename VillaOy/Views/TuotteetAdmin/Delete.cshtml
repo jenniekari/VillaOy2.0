@@ -1,0 +1,47 @@
+﻿@model VillaOy.Models.Tuotteet
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Tuotteen poisto</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nimi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nimi)
+        </dd>
+
+        <dt>
+            Hinta
+            @*@Html.DisplayNameFor(model => model.Ahinta)*@
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ahinta)
+        </dd>
+        @*
+        <dt>
+            @Html.DisplayNameFor(model => model.Kuva)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Kuva)
+        </dd>*@
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Poista" class="btn btn-danger" /> |
+            @Html.ActionLink("Takaisin listaan", "Index")
+        </div>
+    }
+</div>

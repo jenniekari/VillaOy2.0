@@ -1,0 +1,45 @@
+﻿@model IEnumerable<VillaOy.Models.Tuotteet>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Tuotteet</h2>
+
+<p>
+    @Html.ActionLink("Luo uusi", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nimi)
+        </th>
+        <th>Hinta</th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.Ahinta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Kuva)
+        </th>*@
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nimi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ahinta)
+        </td>@*
+        <td>
+            @Html.DisplayFor(modelItem => item.Kuva)
+        </td>*@
+        <td>
+            @Html.ActionLink("Muokkaa", "Edit", new { id=item.TuoteID }) |
+            @Html.ActionLink("Lisätiedot", "Details", new { id=item.TuoteID }) |
+            @Html.ActionLink("Poista", "Delete", new { id=item.TuoteID })
+        </td>
+    </tr>
+}
+
+</table>

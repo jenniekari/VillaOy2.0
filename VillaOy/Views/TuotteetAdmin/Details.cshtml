@@ -1,0 +1,42 @@
+﻿@model VillaOy.Models.Tuotteet
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Tuotteen lisätiedot</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nimi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nimi)
+        </dd>
+
+        
+        <dt>
+            Hinta@*@Html.DisplayNameFor(model => model.Ahinta)*@
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ahinta)
+        </dd>
+        
+        @*<dt>
+            @Html.DisplayNameFor(model => model.Kuva)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Kuva)
+        </dd>*@
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Muokkaa", "Edit", new { id = Model.TuoteID }) |
+    @Html.ActionLink("Takaisin listaan", "Index")
+</p>

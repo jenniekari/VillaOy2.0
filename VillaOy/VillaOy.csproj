@@ -186,6 +186,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Icons\exclamation-triangle.svg" />
     <Content Include="Icons\info-circle-fill.svg" />
     <Content Include="Icons\info-circle.svg" />
     <Content Include="Icons\info-lg.svg" />
@@ -193,6 +194,7 @@
     <Content Include="Icons\info-square.svg" />
     <Content Include="Icons\info.svg" />
     <Content Include="Icons\linkedin.svg" />
+    <Content Include="Icons\person-check.svg" />
     <Content Include="Models\VillaOyModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>VillaOyModel.edmx</DependentUpon>

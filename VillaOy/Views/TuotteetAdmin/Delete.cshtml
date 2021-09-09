@@ -26,21 +26,28 @@
             @Html.DisplayFor(model => model.Ahinta)
         </dd>
         @*
-        <dt>
-            @Html.DisplayNameFor(model => model.Kuva)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Kuva)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Kuva)
-        </dd>*@
+            <dd>
+                @Html.DisplayFor(model => model.Kuva)
+            </dd>*@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
+        /*<div class="form-actions no-color">
             <input type="submit" value="Poista" class="btn btn-danger" /> |
+            @Html.ActionLink("Takaisin listaan", "Index")
+        </div>*/
+        <div class="form-actions no-color">
+            <button type="submit" value="Poista" class="btn btn-danger">
+                <i class="fa fa-exclamation-triangle"></i> Poista
+            </button> |
             @Html.ActionLink("Takaisin listaan", "Index")
         </div>
     }

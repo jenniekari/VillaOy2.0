@@ -4,6 +4,10 @@
     ViewBag.Title = "Delete";
 }
 
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+      integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+      crossorigin="anonymous">
+
 <h2>Poista</h2>
 
 <div>
@@ -59,11 +63,20 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
+        /*<div class="form-actions no-color">
+            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
             <input type="submit" value="Poista" class="btn btn-danger" /> |
+            @Html.ActionLink("Takaisin listaan", "Index")
+        </div>*/
+
+        <div class="form-actions no-color">
+            <button type="submit" value="Poista" class="btn btn-danger">
+                <i class="fa fa-exclamation-triangle"></i> Poista
+            </button> |
             @Html.ActionLink("Takaisin listaan", "Index")
         </div>
     }

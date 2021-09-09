@@ -48,20 +48,22 @@
         </div>
     </div>
     <br />
-
+    <!--
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Tallenna" class="btn btn-primary" />
         </div>
+    </div>-->
+    <div class="form-actions no-color">
+        <button type="submit" value="Tallenna" class="btn btn-primary">
+            <i class="fa fa-edit"></i> Tallenna
+        </button> |
+        @Html.ActionLink("Takaisin listaan", "Index")
     </div>
+
 </div>
     <br />
 }
-
-<div>
-    @Html.ActionLink("Takaisin listaan", "Index")
-</div>
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

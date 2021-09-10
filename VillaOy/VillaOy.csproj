@@ -136,6 +136,42 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Asiakkaat.cs">
+      <DependentUpon>VillaOyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Henkilot.cs">
+      <DependentUpon>VillaOyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Logins.cs">
+      <DependentUpon>VillaOyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Postitoimipaikat.cs">
+      <DependentUpon>VillaOyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tilaukset.cs">
+      <DependentUpon>VillaOyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tilausrivit.cs">
+      <DependentUpon>VillaOyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tuotteet.cs">
+      <DependentUpon>VillaOyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VillaOyModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VillaOyModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VillaOyModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VillaOyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VillaOyModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VillaOyModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +195,16 @@
     <Content Include="Icons\info.svg" />
     <Content Include="Icons\linkedin.svg" />
     <Content Include="Icons\person-check.svg" />
+    <Content Include="Models\VillaOyModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>VillaOyModel.edmx</DependentUpon>
+      <LastGenOutput>VillaOyModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\VillaOyModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>VillaOyModel.edmx</DependentUpon>
+      <LastGenOutput>VillaOyModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -182,6 +228,13 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <EntityDeploy Include="Models\VillaOyModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>VillaOyModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\VillaOyModel.edmx.diagram">
+      <DependentUpon>VillaOyModel.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\VillaOy - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
@@ -322,7 +375,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

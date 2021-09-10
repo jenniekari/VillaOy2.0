@@ -167,7 +167,7 @@ namespace VillaOy.Controllers
                                                           select new SelectListItem
                                                           {
                                                               Value = p.Postinumero.ToString(),
-                                                              Text = p.Postinumero + " " + p.Postitoimipaikat1
+                                                              Text = p.Postinumero + " " + p.Postitoimipaikka
                                                           };
 
             ViewBag.Postnro = new SelectList(selectPostiList, "Value", "Text", asiakkaat.Postinumero);

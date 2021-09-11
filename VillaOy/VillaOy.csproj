@@ -205,6 +205,9 @@
       <DependentUpon>VillaOyModel.edmx</DependentUpon>
       <LastGenOutput>VillaOyModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Pictures\Children.jpg" />
+    <Content Include="Pictures\Woman.jpg" />
+    <Content Include="Pictures\Wool.jpg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />

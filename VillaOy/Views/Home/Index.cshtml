@@ -1,12 +1,157 @@
-﻿@{
+﻿@model VillaOy.Models.Logins
+
+@{
     ViewBag.Title = "Home Page";
 }
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<style>
+    /* Make the image fully responsive */
+    .carousel-inner img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .carousel {
+        width: 100%;
+        max-width: 600px;
+        left: 25%;
+        right: 25%;
+    }
+    
+    .field-validation-error{
+        color: red;
+    }
+
+    .modal-content {
+        font-family: "Segoe UI","Segoe UI";
+    }
+</style>
 
 <div class="jumbotron">
     <h1>Villa Oy</h1>
     <p class="lead">Villa oy myy suomalaista, käsintehtyjä villatuotteita.</p>
-    <p><a href="https://fi.wikipedia.org/wiki/Villa" class="btn btn-primary btn-lg"><img src="~/Icons/info.svg" alt="VillaWikipedia" width="28" height="28" title="Villa">Lue villasta &raquo;</a></p>
+
+    @*Modal-tyyppisen ikkunan avauspainike*@
+    @if (@Session["UserName"] == null) //Ei näytä nappulaa, jos kirjauduttu sisään
+    {
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Kirjaudu sisään</button>
+    }
+
+    @*Uloskirjautuminen*@
+    @if (@Session["UserName"] != null) //Ei näytä nappulaa, jos ei ole kirjauduttu sisään
+    {
+        <a href="@Url.Action("LogOut","Home")" class="btn btn-danger">Kirjaudu ulos</a>
+    }
+
+    @*Modal-tyyppinen ikkuna*@
+    <div class="modal fade" id="myModal" role="dialog">
+        @*fade sana tekee ikkunasta feidaavan*@
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1>Kirjaudu sisään</h1>
+                </div>
+
+                <div class="modal-body">
+                    @using (Html.BeginForm("Autherize", "Home", FormMethod.Post))
+                    {
+                        <table>
+                            <tr>
+                                <td></td>
+                                @*<td style="text-decoration:underline">Käyttäjä</td>*@
+                            </tr>
+                            <tr>
+                                <td>@Html.LabelFor(model => model.UserName)  </td>
+                                <td>@Html.EditorFor(model => model.UserName)</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>@Html.ValidationMessageFor(model => model.UserName)</td>
+                            </tr>
+                            <tr>
+                                <td>@Html.LabelFor(model => model.PassWord)  </td>
+                                <td>@Html.EditorFor(model => model.PassWord)</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>@Html.ValidationMessageFor(model => model.PassWord)</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <label class="field-validation-error">@Html.DisplayFor(model => model.ErrorMessage)</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <input type="submit" name="name" class="btn btn-success" value="Kirjaudu" />
+                                    <input type="reset" name="name" class="btn btn-primary" value="Tyhjennä" />
+                                </td>
+                            </tr>
+                        </table>
+                    }
+                    @*
+
+                        <div class="form-group">
+                            <label for="UserName" class="col-lg-3 control-label">Käyttäjä:</label>
+                            <input class="form-control" id="UserName" placeholder="Käyttäjä" type="text" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Password" class="col-lg-3 control-label">Salasana:</label>
+                            <input class="form-control" id="Password" placeholder="Salasana" type="password" />
+                        </div>*@
+                </div>
+
+                <div class="modal-footer">
+                    @*<button type="button" class="btn btn-success" data-save="modal">Kirjaudu</button>*@
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Peruuta</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<!--Kuvakaruselli-->
+<div id="carousel" class="carousel slide" data-ride="carousel">
+
+    <!-- Indicators -->
+    <ul class="carousel-indicators">
+        <li data-target="#carousel" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel" data-slide-to="1"></li>
+        <li data-target="#carousel" data-slide-to="2"></li>
+    </ul>
+
+    <!-- The slideshow -->
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="~/Pictures/Woman.jpg" alt="pictureofwoman" width="1100" height="500">
+        </div>
+        <div class="carousel-item">
+            <img src="~/Pictures/Wool.jpg" alt="pictureofwool" width="1100" height="500">
+        </div>
+        <div class="carousel-item">
+            <img src="~/Pictures/Children.jpg" alt="pictureofchildren" width="1100" height="500">
+        </div>
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="carousel-control-prev" href="#carousel" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#carousel" data-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </a>
+</div>
+
+<br>
+<p><a href="https://fi.wikipedia.org/wiki/Villa" class="btn btn-primary btn-lg"><img src="~/Icons/info.svg" alt="VillaWikipedia" width="28" height="28" title="Villa">Lue villasta &raquo;</a></p>
+
 
 <div class="row">
     <div class="col-md-4">
@@ -30,3 +175,7 @@
         <p><a class="btn btn-default" href="~/Tilauksets/Index">Tilaukset &raquo;</a></p>
     </div>
 </div>
+
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

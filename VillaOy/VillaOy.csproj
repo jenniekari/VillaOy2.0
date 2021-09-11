@@ -382,7 +382,6 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\Tuotekuva.cshtml" />
     <Content Include="Views\TuotteetAdmin\Login.cshtml" />
-    <Content Include="Views\TuotteetAdmin\Index3.cshtml" />
     <Content Include="Views\Home\Tuotteet.cshtml" />
   </ItemGroup>
   <ItemGroup>

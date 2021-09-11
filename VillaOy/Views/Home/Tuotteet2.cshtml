@@ -1,0 +1,36 @@
+﻿@model IEnumerable<VillaOy.Models.Tuotteet>
+
+@{
+    ViewBag.Title = "Tuotteet";
+}
+
+<h2>Tuotteet</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nimi)
+        </th>
+        <th>
+            Hinta@*@Html.DisplayNameFor(model => model.Ahinta)*@
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nimi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ahinta)
+            </td>
+            @*
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id=item.TuoteID }) |
+                </td>*@
+        </tr>
+    }
+</table>
+
+<p><a class="btn btn-outline-primary" href="~/Home/Tuotekuva">Täältä löydät tuotteiden kuvat! &raquo;</a></p>

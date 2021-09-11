@@ -72,9 +72,18 @@ namespace VillaOy.Controllers
 
             return View();
         }
-        public ActionResult Tuotteet()
+        public ActionResult Tuotteet(string currentFilter1, string searchString1)
         {
-            return View(db.Tuotteet.ToList());
+            var tuotteet = from p in db.Tuotteet
+                           select p;
+
+            if (!String.IsNullOrEmpty(searchString1))
+            {
+                tuotteet = tuotteet.Where(p => p.Nimi.Contains(searchString1));
+            }
+
+            return View(tuotteet);
+            //return View(db.Tuotteet.ToList());
         }
 
         public ActionResult Tuotekuva()

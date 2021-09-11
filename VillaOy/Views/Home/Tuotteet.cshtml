@@ -6,14 +6,32 @@
 
 <h2>Tuotteet</h2>
 
+@using (Html.BeginForm("Tuotteet", "Home", FormMethod.Get))
+{
+    <div class="input-group">
+    @*Tämä tulostaa paragrafit rinnakkain, eikä erilleen*@
+    @*px-1 meinaa, että ympärillä on paddingiä/tilaa*@
+    <p class="px-1">@Html.Label("Etsi nimellä:")</p> @*Otsikko*@
+    <p class="px-1">@Html.TextBox("SearchString1", ViewBag.currentFilter1 as string, new { @class = "form-control" })</p> @*Tällä nimellä kontrolleri näkee mitä tekstiboksiin on syötetty *@
+    <p class="px-1"><input type="submit" value="Etsi" class="form-control" /></p> @*buttoni*@
+</div>
+}
+
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Nimi)
         </th>
         <th>
-            Hinta@*@Html.DisplayNameFor(model => model.Ahinta)*@
+            Hinta@*@@Html.DisplayNameFor(model => model.Ahinta)*@
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Kuva)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.Kuvalinkki)
+            </th>*@
+        <th></th>
     </tr>
 
     @foreach (var item in Model)
@@ -25,12 +43,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Ahinta)
             </td>
-            @*
-                <td>
-                    @Html.ActionLink("Details", "Details", new { id=item.TuoteID }) |
+            <td>
+                @Html.DisplayFor(modelItem => item.Kuva)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Kuvalinkki)
                 </td>*@
         </tr>
     }
-</table>
 
-<p><a class="btn btn-outline-primary" href="~/Home/Tuotekuva">Täältä löydät tuotteiden kuvat! &raquo;</a></p>
+</table>

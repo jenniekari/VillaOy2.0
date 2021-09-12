@@ -369,7 +369,7 @@
     <Content Include="Views\TuotteetAdmin\Delete.cshtml" />
     <Content Include="Views\TuotteetAdmin\Details.cshtml" />
     <Content Include="Views\TuotteetAdmin\Edit.cshtml" />
-    <Content Include="Views\TuotteetAdmin\Index.cshtml" />
+    <Content Include="Views\TuotteetAdmin\Index2.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper.js.flow" />
@@ -383,6 +383,7 @@
     <Content Include="Views\Home\Tuotekuva.cshtml" />
     <Content Include="Views\TuotteetAdmin\Login.cshtml" />
     <Content Include="Views\Home\Tuotteet.cshtml" />
+    <Content Include="Views\TuotteetAdmin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

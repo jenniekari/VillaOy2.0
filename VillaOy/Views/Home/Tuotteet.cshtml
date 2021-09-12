@@ -1,4 +1,6 @@
-﻿@model IEnumerable<VillaOy.Models.Tuotteet>
+﻿@model PagedList.IPagedList<VillaOy.Models.Tuotteet>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Tuotteet";
@@ -9,24 +11,27 @@
 @using (Html.BeginForm("Tuotteet", "Home", FormMethod.Get))
 {
     <div class="input-group">
-    @*Tämä tulostaa paragrafit rinnakkain, eikä erilleen*@
-    @*px-1 meinaa, että ympärillä on paddingiä/tilaa*@
-    <p class="px-1">@Html.Label("Etsi nimellä:")</p> @*Otsikko*@
-    <p class="px-1">@Html.TextBox("SearchString1", ViewBag.currentFilter1 as string, new { @class = "form-control" })</p> @*Tällä nimellä kontrolleri näkee mitä tekstiboksiin on syötetty *@
-    <p class="px-1"><input type="submit" value="Etsi" class="form-control" /></p> @*buttoni*@
-</div>
+        @*Tämä tulostaa paragrafit rinnakkain, eikä erilleen*@
+        @*px-1 meinaa, että ympärillä on paddingiä/tilaa*@
+        <p class="px-1">@Html.Label("Etsi nimellä:")</p> @*Otsikko*@
+        <p class="px-1">@Html.TextBox("SearchString1", ViewBag.currentFilter1 as string, new { @class = "form-control" })</p> @*Tällä nimellä kontrolleri näkee mitä tekstiboksiin on syötetty *@
+        <p class="px-1"><input type="submit" value="Etsi" class="form-control" /></p> @*buttoni*@
+    </div>
 }
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Nimi)
+            @*Actionlink kutsuu kontrolleria Tuotteet-metodia, ja välittää yhden parametrin, joka on "sortOrder" eli lajittelujärjestys.*@
+            @Html.ActionLink("Nimi", "Tuotteet", new { sortOrder = ViewBag.ProductNameSortParm, currentFilter1 = ViewBag.currentFilter1 })
+            @*@Html.DisplayNameFor(model => model.Nimi)*@
         </th>
         <th>
-            Hinta@*@@Html.DisplayNameFor(model => model.Ahinta)*@
+            @Html.ActionLink("Hinta", "Tuotteet", new { sortOrder = ViewBag.UnitPriceSortParm, currentFilter1 = ViewBag.currentFilter1 })
+            @*Hinta@*@@*@Html.DisplayNameFor(model => model.Ahinta)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Kuva)
+            Kuva@*@Html.DisplayNameFor(model => model.Kuva)*@
         </th>
         @*<th>
                 @Html.DisplayNameFor(model => model.Kuvalinkki)
@@ -53,3 +58,11 @@
     }
 
 </table>
+
+<br />
+
+@*Sivuttaminen eli sivujen lukumäärä*@
+Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+
+@*Seuraavan sivun klikkaus*@
+@Html.PagedListPager(Model, page => Url.Action("Tuotteet", new { page, sortOrder = ViewBag.CurrentSort, currentFilter1 = ViewBag.currentFilter1 }))

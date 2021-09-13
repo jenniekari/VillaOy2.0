@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using PagedList;
 using System.Data.Entity;
-using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using VillaOy.Models;
+using System.Linq;
+
 
 namespace VillaOy.Controllers
 {
@@ -45,8 +47,9 @@ namespace VillaOy.Controllers
             return RedirectToAction("Index", "Home"); //Uloskirjautumisen jälkeen pääsivulle
         }
         // GET: Asiakkaat
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter1, string searchString1, int? page, int? pagesize)
         {
+            
             if (Session["UserName"] == null)
             {
                 return RedirectToAction("Login", "TuotteetAdmin");
@@ -54,8 +57,69 @@ namespace VillaOy.Controllers
             else
             {
                 ViewBag.LoggedStatus = "In";
-                var asiakkaat = db.Asiakkaat.Include(a => a.Postitoimipaikat);
-                return View(asiakkaat.ToList());
+                
+                ViewBag.CurrentSort = sortOrder;
+                //if-lause vb.pnsp jälkeen = Jos ensimmäinen lause on tosi ? toinen lause toteutuu : jos epätosi, niin tämä kolmas lause toteutuu
+                ViewBag.CustomerNameSortParm = String.IsNullOrEmpty(sortOrder) ? "customername_desc" : "";
+                ViewBag.ZipCodeSortParm = sortOrder == "ZipCode" ? "ZipCode_desc" : "ZipCode";
+
+                //Hakufiltterin laitto muistiin
+                if (searchString1 != null) //tarkistetaan onko käyttäjän antama arvo (esim. kirjain a tai sana villa) eri suuruinen kuin null
+                {
+                    page = 1; //jos a-kirjainta etitään, niin vie sivulle 1 kaikki tuotteet, jossa a-kirjain
+                }
+                else
+                {
+                    searchString1 = currentFilter1;
+                }
+
+                ViewBag.currentFilter1 = searchString1;
+
+                var asiakkaat = from p in db.Asiakkaat
+                               select p;
+
+                if (!String.IsNullOrEmpty(searchString1)) //Jos hakufiltteri on käytössä, niin käytetään sitä ja sen lisäksi lajitellaan tulokset
+                {
+                    switch (sortOrder)
+                    {
+                        case "customername_desc":
+                            asiakkaat = asiakkaat.Where(p => p.Nimi.Contains(searchString1)).OrderByDescending(p => p.Nimi);
+                            break;
+                        case "ZipCode":
+                            asiakkaat = asiakkaat.Where(p => p.Nimi.Contains(searchString1)).OrderBy(p => p.Postitoimipaikat);
+                            break;
+                        case "ZipCode_desc":
+                            asiakkaat = asiakkaat.Where(p => p.Nimi.Contains(searchString1)).OrderByDescending(p => p.Postitoimipaikat);
+                            break;
+                        default:
+                            asiakkaat = asiakkaat.Where(p => p.Nimi.Contains(searchString1)).OrderBy(p => p.Nimi);
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (sortOrder)
+                    {
+                        case "customername_desc":
+                            asiakkaat = asiakkaat.OrderByDescending(p => p.Nimi);
+                            break;
+                        case "ZipCode":
+                            asiakkaat = asiakkaat.OrderBy(p => p.Postitoimipaikat.Postitoimipaikka);
+                            break;
+                        case "ZipCode_desc":
+                            asiakkaat = asiakkaat.OrderByDescending(p => p.Postitoimipaikat.Postitoimipaikka);
+                            break;
+                        default:
+                            asiakkaat = asiakkaat.OrderBy(p => p.Nimi);
+                            break;
+                    }
+                };
+
+                int pageSize = (pagesize ?? 10); //Tämä palauttaa sivukoon taikka jos pagesize on null, niin palauttaa koon 10 riviä per sivu
+                int pageNumber = (page ?? 1); //int pageNumber on sivuparametrien arvojen asetus. Tämä palauttaa sivunumeron taikka jos page on null, niin palauttaa numeron yksi
+                return View(asiakkaat.ToPagedList(pageNumber, pageSize));
+                //var asiakkaat = db.Asiakkaat.Include(a => a.Postitoimipaikat);
+                //return View(asiakkaat.ToList());
             }
         }
 

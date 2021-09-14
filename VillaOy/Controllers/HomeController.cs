@@ -25,6 +25,7 @@ namespace VillaOy.Controllers
             {
                 //ViewBag.LoginMessage = "Kirjautuminen onnistui!";
                 ViewBag.LoggedStatus = "In";
+                ViewBag.LoginError = 0; //Ei virhettä
                 Session["UserName"] = LoggedUser.UserName;
                 return RedirectToAction("Index", "Home"); //Tässä määritellään mihin onnistunut kirjautuminen johtaa
             }
@@ -32,9 +33,10 @@ namespace VillaOy.Controllers
             {
                 //ViewBag.LoginMessage = "Kirjautuminen epäonnistui.";
                 ViewBag.LoggedStatus = "Out";
+                ViewBag.LoginError = 1; //Pakotetaan modaali login-ruutu uudelleen, koska kirjautumisyritys epäonnistunut
                 LoginModel.ErrorMessage = "Tuntematon käyttäjätunnus tai salasana."; //tätä ei näytetä, sillä epäonnistunut kirjautuminen viedään
-                return RedirectToAction("Login", "TuotteetAdmin");
-                //return View("Index", LoginModel);
+                //return RedirectToAction("Login", "TuotteetAdmin");
+                return View("Index", LoginModel);
             }
             /*
             using (VillaOyEntities db = new VillaOyEntities())

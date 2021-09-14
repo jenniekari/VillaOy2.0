@@ -110,7 +110,7 @@ namespace VillaOy.Controllers
                     switch (sortOrder)
                     {
                         case "customername_desc":
-                            tilaukset = tilaukset.Where(p => p.TilausID == para).OrderByDescending(p => p.Asiakkaat.Nimi);
+                            tilaukset = tilaukset.Where(p => p.TilausID == para).OrderByDescending(p => p.AsiakasID);
                             break;
                         case "ZipCode":
                             tilaukset = tilaukset.Where(p => p.TilausID == para).OrderBy(p => p.Postitoimipaikat.Postitoimipaikka);
@@ -119,7 +119,7 @@ namespace VillaOy.Controllers
                             tilaukset = tilaukset.Where(p => p.TilausID == para).OrderByDescending(p => p.Postitoimipaikat.Postitoimipaikka);
                             break;
                         default:
-                            tilaukset = tilaukset.Where(p => p.TilausID == para).OrderBy(p => p.Asiakkaat.Nimi);
+                            tilaukset = tilaukset.Where(p => p.TilausID == para).OrderBy(p => p.AsiakasID);
                             break;
                     }
                 }

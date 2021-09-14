@@ -372,7 +372,7 @@
     <Content Include="Views\Tilauksets\Delete.cshtml" />
     <Content Include="Views\Tilauksets\Details.cshtml" />
     <Content Include="Views\Tilauksets\Edit.cshtml" />
-    <Content Include="Views\Tilauksets\Index.cshtml" />
+    <Content Include="Views\Tilauksets\Index2.cshtml" />
     <Content Include="Views\Postitoimipaikat\Create.cshtml" />
     <Content Include="Views\Postitoimipaikat\Delete.cshtml" />
     <Content Include="Views\Postitoimipaikat\Details.cshtml" />
@@ -398,6 +398,7 @@
     <Content Include="Views\Home\Tuotteet.cshtml" />
     <Content Include="Views\TuotteetAdmin\Index.cshtml" />
     <Content Include="Views\Asiakkaat\Index.cshtml" />
+    <Content Include="Views\Tilauksets\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

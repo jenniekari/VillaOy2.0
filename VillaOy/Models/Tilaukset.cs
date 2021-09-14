@@ -18,6 +18,8 @@ namespace VillaOy.Models
         public int AsiakasID { get; set; }
         public string Toimitusosoite { get; set; }
         public string Postinumero { get; set; }
+
+        public string CategoryIDCategoryName { get; set; }
         public Nullable<System.DateTime> Tilauspvm { get; set; }
         public Nullable<System.DateTime> Toimituspvm { get; set; }
     

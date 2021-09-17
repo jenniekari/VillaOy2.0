@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using VillaOy.Models;
 using PagedList;
+using VillaOy.ViewModels;
+
 
 namespace VillaOy.Controllers
 {
@@ -141,9 +143,9 @@ namespace VillaOy.Controllers
                             break;
                     }
                 };
-
+                /*
                 List<Tilaukset> lstTilaukset = new List<Tilaukset>();
-
+                
                 var tilauksetList = from cat in db.Tilaukset
                                     select cat;
 
@@ -152,7 +154,7 @@ namespace VillaOy.Controllers
                 tyhjaTilaukset.AsiakasID = 0;
                 tyhjaTilaukset.CategoryIDCategoryName = "";
                 lstTilaukset.Add(tyhjaTilaukset);
-
+                /*
                 foreach(Tilaukset tilaus in lstTilaukset)
                 {
                     Tilaukset yksiTilaus = new Tilaukset();
@@ -162,7 +164,7 @@ namespace VillaOy.Controllers
                     lstTilaukset.Add(yksiTilaus);
                 }
                 ViewBag.TilausID = new SelectList(lstTilaukset, "TilausID", "CategoryIDCategoryName", AsiakkaatCategory);
-
+                */
                 int pageSize = (pagesize ?? 10); //Tämä palauttaa sivukoon taikka jos pagesize on null, niin palauttaa koon 10 riviä per sivu
                 int pageNumber = (page ?? 1); //int pageNumber on sivuparametrien arvojen asetus. Tämä palauttaa sivunumeron taikka jos page on null, niin palauttaa numeron yksi
                 return View(tilaukset.ToPagedList(pageNumber, pageSize));
@@ -322,6 +324,28 @@ namespace VillaOy.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult Ordersummary()
+        {
+            var orderSummary = from or in db.Tilaukset
+                               join ti in db.Tilausrivit on or.TilausID equals ti.TilausID
+                               //where-lause
+                               //orderby-lause
+                               select new OrderSummaryData
+                               {
+                                   TilausID = or.TilausID,
+                                   AsiakasID = or.AsiakasID,
+                                   Toimitusosoite = or.Toimitusosoite,
+                                   Postinumero = or.Postinumero,
+                                   Tilauspvm = (DateTime)or.Tilauspvm,
+                                   Toimituspvm = (DateTime)or.Toimituspvm,
+                                   TilausriviID = ti.TilausriviID,
+                                   TuoteID = ti.TuoteID,
+                                   Maara = ti.Maara,
+                                   Ahinta = (float)ti.Ahinta,
+                               };
+            return View(orderSummary);
         }
     }
 }

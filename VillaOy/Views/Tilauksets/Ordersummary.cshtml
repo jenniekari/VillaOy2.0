@@ -1,0 +1,79 @@
+﻿@model IEnumerable<VillaOy.ViewModels.OrderSummaryData>
+
+@{
+    ViewBag.Title = "Ordersummary";
+}
+
+<h2>Tilaukset ja tilausrivit</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TilausID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AsiakasID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Toimitusosoite)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Postinumero)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tilauspvm)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Toimituspvm)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TilausriviID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TuoteID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Maara)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ahinta)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TilausID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AsiakasID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Toimitusosoite)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Postinumero)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tilauspvm)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Toimituspvm)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TilausriviID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TuoteID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Maara)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ahinta)
+        </td>
+    </tr>
+}
+
+</table>

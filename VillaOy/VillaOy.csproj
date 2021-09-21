@@ -402,6 +402,8 @@
     <Content Include="Views\Tilauksets\Index.cshtml" />
     <Content Include="Views\Tilauksets\IndexDropdown.cshtml" />
     <Content Include="Views\Tilauksets\Ordersummary.cshtml" />
+    <Content Include="Views\Shared\_NavBarLoggedIn.cshtml" />
+    <Content Include="Views\Shared\_NavBarLoggedOut.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

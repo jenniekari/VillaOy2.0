@@ -26,17 +26,17 @@
     <h1>Villa Oy</h1>
     <p class="lead">Villa oy myy suomalaista, käsintehtyjä villatuotteita.</p>
 
-    @*Modal-tyyppisen ikkunan avauspainike*@
+    @*Modal-tyyppisen ikkunan avauspainike
     @if (@Session["UserName"] == null) //Ei näytä nappulaa, jos kirjauduttu sisään
     {
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Kirjaudu sisään</button>
-    }
+    }*@
 
-    @*Uloskirjautuminen*@
+    @*Uloskirjautuminen
     @if (@Session["UserName"] != null) //Ei näytä nappulaa, jos ei ole kirjauduttu sisään
     {
         <a href="@Url.Action("LogOut","Home")" class="btn btn-danger">Kirjaudu ulos</a>
-    }
+    }*@
 
     @*Modal-tyyppinen ikkuna*@
     <div class="modal fade" id="myModal" role="dialog">

@@ -1,0 +1,68 @@
+﻿@model VillaOy.Models.Logins
+
+@*Modal-tyyppinen ikkuna*@
+<div class="modal fade" id="myModal" role="dialog">
+    @*fade sana tekee ikkunasta feidaavan*@
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1>Kirjaudu sisään</h1>
+            </div>
+
+            <div class="modal-body">
+                @using (Html.BeginForm("Autherize", "Home", FormMethod.Post))
+                {
+                    <table>
+                        <tr>
+                            <td></td>
+                            @*<td style="text-decoration:underline">Käyttäjä</td>*@
+                        </tr>
+                        <tr>
+                            <td>@Html.LabelFor(model => model.UserName)  </td>
+                            <td>@Html.EditorFor(model => model.UserName)</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>@Html.ValidationMessageFor(model => model.UserName)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.LabelFor(model => model.PassWord)  </td>
+                            <td>@Html.EditorFor(model => model.PassWord)</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>@Html.ValidationMessageFor(model => model.PassWord)</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <label class="field-validation-error">@Html.DisplayFor(model => model.ErrorMessage)</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="submit" name="name" class="btn btn-success" value="Kirjaudu" />
+                                <input type="reset" name="name" class="btn btn-primary" value="Tyhjennä" />
+                            </td>
+                        </tr>
+                    </table>
+                }
+                @*
+
+                <div class="form-group">
+                    <label for="UserName" class="col-lg-3 control-label">Käyttäjä:</label>
+                    <input class="form-control" id="UserName" placeholder="Käyttäjä" type="text" />
+                </div>
+                <div class="form-group">
+                    <label for="Password" class="col-lg-3 control-label">Salasana:</label>
+                    <input class="form-control" id="Password" placeholder="Salasana" type="password" />
+                </div>*@
+                <div class="modal-footer">
+                    @*<button type="button" class="btn btn-success" data-save="modal">Kirjaudu</button>*@
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Peruuta</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

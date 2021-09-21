@@ -404,6 +404,7 @@
     <Content Include="Views\Tilauksets\Ordersummary.cshtml" />
     <Content Include="Views\Shared\_NavBarLoggedIn.cshtml" />
     <Content Include="Views\Shared\_NavBarLoggedOut.cshtml" />
+    <Content Include="Views\Home\_LoginModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

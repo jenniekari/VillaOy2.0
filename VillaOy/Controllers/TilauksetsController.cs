@@ -305,6 +305,45 @@ namespace VillaOy.Controllers
             return View(tilaukset);
         }
 
+        public ActionResult _ModalEdit(int? id)
+        {
+            if (Session["UserName"] == null)
+            {
+                return RedirectToAction("Login", "TuotteetAdmin");
+            }
+            else
+            {
+                ViewBag.LoggedStatus = "In";
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Tilaukset tilaukset = db.Tilaukset.Find(id);
+                if (tilaukset == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.AsiakasID = new SelectList(db.Asiakkaat, "AsiakasID", "Nimi", tilaukset.AsiakasID);
+                ViewBag.Postinumero = new SelectList(db.Postitoimipaikat, "Postinumero", "Postitoimipaikka", tilaukset.Postinumero);
+                return PartialView("_ModalEdit", tilaukset);
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult _ModalEdit([Bind(Include = "TilausID,AsiakasID,Toimitusosoite,Postinumero,Tilauspvm,Toimituspvm")] Tilaukset tilaukset)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(tilaukset).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.AsiakasID = new SelectList(db.Asiakkaat, "AsiakasID", "Nimi", tilaukset.AsiakasID);
+            ViewBag.Postinumero = new SelectList(db.Postitoimipaikat, "Postinumero", "Postitoimipaikka", tilaukset.Postinumero);
+            return PartialView("_ModalEdit", tilaukset);
+        }
+
         // GET: Tilauksets/Delete/5
         public ActionResult Delete(int? id)
         {

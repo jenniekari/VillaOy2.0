@@ -6,12 +6,27 @@
     ViewBag.Title = "Index";
 }
 
-
-
     <!--tämä on jQueryä-->
     @section scripts
     {
         <script type="text/javascript">
+            $(function () {
+                $(".getTilausId").click(function () {
+                    let tilausId = $(this).data("tilausid");
+                    console.log("Klikkasit tilausnumeroa: " + tilausId);
+                    var url = "/Tilauksets/_ModalEdit/?id=" + tilausId;
+                    console.log(url);
+
+                    $("#tilausEdit").append(" <b>Avataan tilauksen " + tilausId + " muokkausikkunaa..</b>");
+
+                    var $detailDivEdit = $("#tilausEdit");
+                    $.get(url, function (data) {
+                        $detailDivEdit.replaceWith(data);
+                        $('#ModalTilausEdit').modal('show');
+                    });
+                });
+            });
+
             $("#singleSelectedAsiakasID").on("change", function () { //risuaita tarkoittaa, että viittaa kyseiseen id:eeseen.
                 //Getting value
                 var selValue = $("#singleSelectedAsiakasID").val();
@@ -34,6 +49,7 @@
     @Html.ActionLink("Luo uusi", "Create")
 </p>
 
+<div id="tilausEdit"></div>
 <p>
     @Html.ActionLink("Tilausten yhteenveto", "Ordersummary")
 </p>
@@ -57,6 +73,7 @@
 
 <table class="table">
     <tr>
+        <th></th>
         <th>
             Toimitusosoite@*@Html.DisplayNameFor(model => model.Toimitusosoite)*@
         </th>
@@ -78,8 +95,9 @@
     </tr>
 
     @foreach (var item in Model)
-    {
+            {
         <tr>
+            <td><button class="getTilausId fas fa-edit" data-tilausid="@item.TilausID"></button></td>
             <td>
                 @Html.DisplayFor(modelItem => item.Toimitusosoite)
             </td>

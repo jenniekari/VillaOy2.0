@@ -1,0 +1,79 @@
+﻿@model IEnumerable<VillaOy.Models.Tilaukset>
+
+@{
+    ViewBag.Title = "TilausOtsikot";
+}
+
+@section scripts {
+    <script type="text/javascript">
+        $(function () {
+            $(".showOrderClass").click(function () {
+                var tilausId = $(this).data("tilausid");
+                //alert("Klikkasit tilausnumeroa: " + tilausId);
+                var url = "/Tilauksets/_Tilausrivit/?TilausID=" + tilausId;
+                $("#orderDetails_" + tilausId).append(" <b>Ladataan tilauksen " + tilausId + " rivejä...</b>");
+                var $detailDiv = $("#orderDetails_" + tilausId);
+                $.get(url, function (data) {
+                    $detailDiv.replaceWith(data);
+                });
+
+            });
+        });
+    </script>
+}
+
+<h2>TilausOtsikot</h2>
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+
+@*fluid ottaa tilan vasemmasta oikeaan laitaan koko kuvan käyttöön*@
+
+<div class="container-fluid">
+    <div class="card-header">
+        <a class="card-link">
+            <form>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text bg-warning font-weight-bold">Tilaus</span>
+                    </div>
+                    <input type="text" class="form-control bg-warning font-weight-bold px-2" value="Tilauspvm" disabled>
+                    <input type="text" class="form-control bg-warning font-weight-bold px-2" value="Toimituspvm" disabled>
+                    <input type="text" class="form-control bg-warning font-weight-bold px-2" value="Nimi" disabled>
+                    <input type="text" class="form-control bg-warning font-weight-bold px-2" value="Postitoimipaikka" disabled>
+                    <input type="text" class="form-control bg-warning font-weight-bold px-2" value="TilausID" disabled>
+                </div>
+            </form>
+        </a>
+    </div>
+
+    <div id="accordion">
+        @foreach (var item in Model)
+        {
+            <div class="card">
+                <div class="card-header">
+                    <a class="card-link showOrderClass" data-tilausid="@item.TilausID" data-toggle="collapse" href="#collapse_@item.TilausID">
+                        <form>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">@item.TilausID</span>
+                                </div>
+                                <input type="text" class="form-control px-2" value="@item.Tilauspvm" disabled> @*disabled tarkoittaa, ettei mitään pysty kirjoittamaan, kun type on text*@
+                                <input type="text" class="form-control px-2" value="@item.Toimituspvm" disabled>
+                                <input type="text" class="form-control px-2" value="@item.Asiakkaat.Nimi" disabled>
+                                <input type="text" class="form-control px-2" value="@item.Postitoimipaikat.Postitoimipaikka" disabled>
+                                <input type="text" class="form-control px-2" value="@item.Tilausrivit.TilausID" disabled>
+                            </div>
+                        </form>
+                    </a>
+                </div>
+                <div id="collapse_@item.TilausID" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                        <div id="orderDetails_@item.TilausID"></div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -49,7 +49,7 @@ namespace VillaOy.Controllers
         }
 
         // GET: Tilauksets
-        public ActionResult Index(string sortOrder, string currentFilter1, string searchString1, string AsiakkaatCategory, string currentAsiakkaatCategory, int? page, int? pagesize)
+        public ActionResult Index(string sortOrder, string currentFilter1, string searchString1, string AsiakasID, string currentAsiakkaatCategory, int? page, int? pagesize)
         {
             if (Session["UserName"] == null)
             {
@@ -77,13 +77,13 @@ namespace VillaOy.Controllers
                 ViewBag.currentFilter1 = searchString1;
 
                 //tämä on sama kuin yllä, mutta kategorioille. Jos arvoa ei ole annettu tai on, niin sivu on 1, eli filtteri on juuri astunut voimaan.
-                if((AsiakkaatCategory != null) && (AsiakkaatCategory != "0"))
+                if((AsiakasID != null) && (AsiakasID != "0"))
                 {
                     page = 1;
                 }
                 else
                 {
-                    AsiakkaatCategory = currentAsiakkaatCategory;
+                    AsiakasID = currentAsiakkaatCategory;
                 }
                 var tilaukset = from p in db.Tilaukset
                                 select p;
@@ -106,9 +106,9 @@ namespace VillaOy.Controllers
                             break;
                     }
                 }
-                else if (!String.IsNullOrEmpty(AsiakkaatCategory) && (AsiakkaatCategory != "0"))
+                else if (!String.IsNullOrEmpty(AsiakasID) && (AsiakasID != "0"))
                 {
-                    int para = int.Parse(AsiakkaatCategory);
+                    int para = int.Parse(AsiakasID);
                     switch (sortOrder)
                     {
                         case "customername_desc":
@@ -143,28 +143,27 @@ namespace VillaOy.Controllers
                             break;
                     }
                 };
-                /*
-                List<Tilaukset> lstTilaukset = new List<Tilaukset>();
                 
-                var tilauksetList = from cat in db.Tilaukset
+                List<Asiakkaat> lstAsiakkaat = new List<Asiakkaat>();
+                
+                var asiakkaatList = from cat in db.Asiakkaat
                                     select cat;
 
-                Tilaukset tyhjaTilaukset = new Tilaukset();
-                tyhjaTilaukset.TilausID = 0;
-                tyhjaTilaukset.AsiakasID = 0;
-                tyhjaTilaukset.CategoryIDCategoryName = "";
-                lstTilaukset.Add(tyhjaTilaukset);
-                /*
-                foreach(Tilaukset tilaus in lstTilaukset)
+                Asiakkaat tyhjaAsiakas = new Asiakkaat();
+                tyhjaAsiakas.Nimi = "";
+                tyhjaAsiakas.AsiakasID = 0;
+                lstAsiakkaat.Add(tyhjaAsiakas);
+                
+                foreach(Asiakkaat asiakas in asiakkaatList)
                 {
-                    Tilaukset yksiTilaus = new Tilaukset();
-                    yksiTilaus.TilausID = tilaus.TilausID;
-                    yksiTilaus.AsiakasID = tilaus.AsiakasID;
-                    yksiTilaus.CategoryIDCategoryName = tilaus.TilausID.ToString() + " - " + tilaus.AsiakasID.ToString();
-                    lstTilaukset.Add(yksiTilaus);
+                    Asiakkaat yksiAsiakas = new Asiakkaat();
+                    yksiAsiakas.Nimi = asiakas.Nimi;
+                    yksiAsiakas.AsiakasID = asiakas.AsiakasID;
+                    //yksiTilaus.CategoryIDCategoryName = tilaus.TilausID.ToString() + " - " + tilaus.AsiakasID.ToString();
+                    lstAsiakkaat.Add(yksiAsiakas);
                 }
-                ViewBag.TilausID = new SelectList(lstTilaukset, "TilausID", "CategoryIDCategoryName", AsiakkaatCategory);
-                */
+                ViewBag.AsiakasID = new SelectList(lstAsiakkaat, "AsiakasID", "Nimi", AsiakasID);
+                
                 int pageSize = (pagesize ?? 10); //Tämä palauttaa sivukoon taikka jos pagesize on null, niin palauttaa koon 10 riviä per sivu
                 int pageNumber = (page ?? 1); //int pageNumber on sivuparametrien arvojen asetus. Tämä palauttaa sivunumeron taikka jos page on null, niin palauttaa numeron yksi
                 return View(tilaukset.ToPagedList(pageNumber, pageSize));
@@ -346,6 +345,37 @@ namespace VillaOy.Controllers
                                    Ahinta = (float)ti.Ahinta,
                                };
             return View(orderSummary);
+        }
+
+        public ActionResult TilausOtsikot()
+        {
+            var orders = db.Tilaukset.Include(o => o.Asiakkaat).Include(o => o.Tilausrivit);
+            return View(orders.ToList());
+        }
+
+        public ActionResult _Tilausrivit(int? tilausid)
+        {
+            if ((tilausid == null || (tilausid == 0)))
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                var orderRowsList = from or in db.Tilaukset
+                                   join ti in db.Tilausrivit on or.TilausID equals ti.TilausID
+                                   where or.TilausID == tilausid
+                                   //orderby-lause
+                                   select new OrderRows
+                                   {
+                                       TilausriviID = ti.TilausriviID,
+                                       TuoteID = ti.TuoteID,
+                                       Toimitusosoite = or.Toimitusosoite,
+                                       Postinumero = or.Postinumero,
+                                       Maara = ti.Maara,
+                                       Ahinta = ti.Ahinta,
+                                   };
+                return PartialView(orderRowsList);
+            }
         }
     }
 }

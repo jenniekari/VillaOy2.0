@@ -192,6 +192,7 @@
       <DependentUpon>VillaOyModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\OrderRows.cs" />
     <Compile Include="ViewModels\OrderSummaryData.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -405,6 +406,8 @@
     <Content Include="Views\Shared\_NavBarLoggedIn.cshtml" />
     <Content Include="Views\Shared\_NavBarLoggedOut.cshtml" />
     <Content Include="Views\Home\_LoginModal.cshtml" />
+    <Content Include="Views\Tilauksets\TilausOtsikot.cshtml" />
+    <Content Include="Views\Tilauksets\_Tilausrivit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

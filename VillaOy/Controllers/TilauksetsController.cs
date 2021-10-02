@@ -49,7 +49,7 @@ namespace VillaOy.Controllers
         }
 
         // GET: Tilauksets
-        public ActionResult Index(string sortOrder, string currentFilter1, string searchString1, string AsiakasID, string currentAsiakkaatCategory, int? page, int? pagesize)
+        public ActionResult Index(string sortOrder, string currentFilter1, string searchString1, string AsiakasID, string Postinumero, string currentAsiakkaatCategory, int? page, int? pagesize)
         {
             if (Session["UserName"] == null)
             {
@@ -163,7 +163,30 @@ namespace VillaOy.Controllers
                     lstAsiakkaat.Add(yksiAsiakas);
                 }
                 ViewBag.AsiakasID = new SelectList(lstAsiakkaat, "AsiakasID", "Nimi", AsiakasID);
-                
+
+                /*
+                //Postitoimipaikan kautta hakeminen
+
+                List<Postitoimipaikat> lstPostinumerot = new List<Postitoimipaikat>();
+
+                var postList = from cat in db.Postitoimipaikat
+                                    select cat;
+
+                Postitoimipaikat tyhjaPost = new Postitoimipaikat();
+                tyhjaPost.Postinumero = "";
+                //tyhjaPost.Postinumero = 0;
+                lstPostinumerot.Add(tyhjaPost);
+
+                foreach (Postitoimipaikat posti in postList)
+                {
+                    Postitoimipaikat postiNumero = new Postitoimipaikat();
+                    postiNumero.Postinumero = postiNumero.Postinumero;
+                    //postiNumero.AsiakasID = asiakas.AsiakasID;
+                    //yksiTilaus.CategoryIDCategoryName = tilaus.TilausID.ToString() + " - " + tilaus.AsiakasID.ToString();
+                    lstPostinumerot.Add(postiNumero);
+                }
+                ViewBag.Postinumero = new SelectList(lstPostinumerot, "Postinumero", Postinumero);*/
+
                 int pageSize = (pagesize ?? 10); //Tämä palauttaa sivukoon taikka jos pagesize on null, niin palauttaa koon 10 riviä per sivu
                 int pageNumber = (page ?? 1); //int pageNumber on sivuparametrien arvojen asetus. Tämä palauttaa sivunumeron taikka jos page on null, niin palauttaa numeron yksi
                 return View(tilaukset.ToPagedList(pageNumber, pageSize));

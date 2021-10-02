@@ -18,6 +18,13 @@
                 //alert(selValue);
                 document.getElementById("AsiakasID").value = selValue;
             });
+            @*
+            $("#singleSelectedPost").on("change", function () { //risuaita tarkoittaa, että viittaa kyseiseen id:eeseen.
+                //Getting value
+                var selValue = $("#singleSelectedPost").val();
+                //alert(selValue);
+                document.getElementById("Postinumero").value = selValue;
+            });*@
         </script>
     }
 
@@ -33,16 +40,19 @@
 
 @using (Html.BeginForm("Index", "Tilauksets", FormMethod.Get))
 {
-    <div class="input-group">
-        @*Tämä tulostaa paragrafit rinnakkain, eikä erilleen*@
-        @*px-1 meinaa, että ympärillä on paddingiä/tilaa*@
-        <p class="px-1">@Html.Label("Etsi asiakkaan nimellä:")</p> @*Otsikko*@
-        <p class="px-1">@Html.TextBox("SearchString1", ViewBag.currentFilter1 as string, new { @class = "form-control" })</p> @*Tällä nimellä kontrolleri näkee mitä tekstiboksiin on syötetty *@
-        <p class="px-1">@Html.Label("Etsi asiakas asiakkaan nimen mukaan:")</p>
-            <p class="px-1">@Html.Hidden("AsiakasID", ViewBag.currentFilter1 as string, new { @id = "AsiakasID", @class = "form-control" })</p>
-            <p class="px-1">@Html.DropDownList("AsiakasID", null, htmlAttributes: new { @id = "singleSelectedAsiakasID", @class = "form-control" })</p>
-        <p class="px-1"><input type="submit" value="Etsi" class="form-control" /></p> @*buttoni*@
-    </div>
+<div class="input-group">
+    @*Tämä tulostaa paragrafit rinnakkain, eikä erilleen*@
+    @*px-1 meinaa, että ympärillä on paddingiä/tilaa*@
+    <p class="px-1">@Html.Label("Etsi asiakkaan nimellä:")</p> @*Otsikko*@
+    <p class="px-1">@Html.TextBox("SearchString1", ViewBag.currentFilter1 as string, new { @class = "form-control" })</p> @*Tällä nimellä kontrolleri näkee mitä tekstiboksiin on syötetty *@
+    <p class="px-1">@Html.Label("Etsi asiakas asiakkaan nimen mukaan:")</p>
+    <p class="px-1">@Html.Hidden("AsiakasID", ViewBag.currentFilter1 as string, new { @id = "AsiakasID", @class = "form-control" })</p>
+    <p class="px-1">@Html.DropDownList("AsiakasID", null, htmlAttributes: new { @id = "singleSelectedAsiakasID", @class = "form-control" })</p>
+    @*<p class="px-1">@Html.Label("Etsi asiakas kaupungin mukaan:")</p>
+    <p class="px-1">@Html.Hidden("Postinumero", ViewBag.currentFilter1 as string, new { @id = "Postinumero", @class = "form-control" })</p>
+    <p class="px-1">@Html.DropDownList("Postinumero", null, htmlAttributes: new { @id = "singleSelectedPost", @class = "form-control" })</p>*@
+    <p class="px-1"><input type="submit" value="Etsi" class="form-control" /></p> @*buttoni*@
+</div>
 }
 
 <table class="table">

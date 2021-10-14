@@ -32,5 +32,7 @@ namespace VillaOy.Models
         public virtual DbSet<Tilaukset> Tilaukset { get; set; }
         public virtual DbSet<Tilausrivit> Tilausrivit { get; set; }
         public virtual DbSet<Tuotteet> Tuotteet { get; set; }
+        public virtual DbSet<Product_Sales_forAllTimes> Product_Sales_forAllTimes { get; set; }
+        public virtual DbSet<ProductSales10Best_forAllTimes> ProductSales10Best_forAllTimes { get; set; }
     }
 }

@@ -411,7 +411,7 @@ namespace VillaOy.Controllers
 
         public ActionResult TilausOtsikot()
         {
-            var orders = db.Tilaukset.Include(o => o.Asiakkaat).Include(o => o.Tilausrivit);
+            var orders = db.Tilaukset.Include(o => o.Tilausrivit).Include(o => o.Asiakkaat);
             return View(orders.ToList());
         }
 

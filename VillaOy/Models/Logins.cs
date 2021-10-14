@@ -18,7 +18,7 @@ namespace VillaOy.Models
     {
         public string LoginId { get; set; }
         [DisplayName("K‰ytt‰j‰")]
-        [Required(ErrorMessage="T‰m‰ kentt‰ pit‰‰ t‰ytt‰‰.")]
+        [Required(ErrorMessage = "T‰m‰ kentt‰ pit‰‰ t‰ytt‰‰.")]
         public string UserName { get; set; }
         [DataType(DataType.Password)]
         [DisplayName("Salasana")]

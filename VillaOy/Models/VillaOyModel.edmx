@@ -55,7 +55,7 @@
         </EntityType>
         <EntityType Name="Tilausrivit">
           <Key>
-            <PropertyRef Name="TilausID" />
+            <PropertyRef Name="TilausriviID" />
           </Key>
           <Property Name="TilausriviID" Type="int" Nullable="false" />
           <Property Name="TilausID" Type="int" Nullable="false" />
@@ -72,6 +72,26 @@
           <Property Name="Ahinta" Type="money" />
           <Property Name="Kuva" Type="image" />
           <Property Name="Kuvalinkki" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'VillaOy.dbo.Product Sales forAllTimes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Product Sales forAllTimes">
+          <Key>
+            <PropertyRef Name="rowid" />
+          </Key>
+          <Property Name="rowid" Type="bigint" Nullable="false" />
+          <Property Name="Nimi" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProductSales" Type="money" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'VillaOy.dbo.ProductSales10Best forAllTimes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ProductSales10Best forAllTimes">
+          <Key>
+            <PropertyRef Name="rowid" />
+          </Key>
+          <Property Name="rowid" Type="bigint" Nullable="false" />
+          <Property Name="Nimi" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProductSales" Type="money" />
         </EntityType>
         <Association Name="FK_Asiakkaat_Postitoimipaikat">
           <End Role="Postitoimipaikat" Type="Self.Postitoimipaikat" Multiplicity="0..1" />
@@ -109,14 +129,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tilaukset_Tilausrivit">
-          <End Role="Tilausrivit" Type="Self.Tilausrivit" Multiplicity="1" />
-          <End Role="Tilaukset" Type="Self.Tilaukset" Multiplicity="0..1" />
+        <Association Name="FK_Tilausrivit_Tilaukset">
+          <End Role="Tilaukset" Type="Self.Tilaukset" Multiplicity="1" />
+          <End Role="Tilausrivit" Type="Self.Tilausrivit" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Tilausrivit">
+            <Principal Role="Tilaukset">
               <PropertyRef Name="TilausID" />
             </Principal>
-            <Dependent Role="Tilaukset">
+            <Dependent Role="Tilausrivit">
               <PropertyRef Name="TilausID" />
             </Dependent>
           </ReferentialConstraint>
@@ -129,7 +149,7 @@
               <PropertyRef Name="TuoteID" />
             </Principal>
             <Dependent Role="Tilausrivit">
-              <PropertyRef Name="TuoteID" />
+              <PropertyRef Name="TilausID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -141,6 +161,20 @@
           <EntitySet Name="Tilaukset" EntityType="Self.Tilaukset" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tilausrivit" EntityType="Self.Tilausrivit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tuotteet" EntityType="Self.Tuotteet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product Sales forAllTimes" EntityType="Self.Product Sales forAllTimes" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Product Sales forAllTimes].[rowid] AS [rowid], 
+    [Product Sales forAllTimes].[Nimi] AS [Nimi], 
+    [Product Sales forAllTimes].[ProductSales] AS [ProductSales]
+    FROM [dbo].[Product Sales forAllTimes] AS [Product Sales forAllTimes]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ProductSales10Best forAllTimes" EntityType="Self.ProductSales10Best forAllTimes" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ProductSales10Best forAllTimes].[rowid] AS [rowid], 
+    [ProductSales10Best forAllTimes].[Nimi] AS [Nimi], 
+    [ProductSales10Best forAllTimes].[ProductSales] AS [ProductSales]
+    FROM [dbo].[ProductSales10Best forAllTimes] AS [ProductSales10Best forAllTimes]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Asiakkaat_Postitoimipaikat" Association="Self.FK_Asiakkaat_Postitoimipaikat">
             <End Role="Postitoimipaikat" EntitySet="Postitoimipaikat" />
             <End Role="Asiakkaat" EntitySet="Asiakkaat" />
@@ -153,9 +187,9 @@
             <End Role="Postitoimipaikat" EntitySet="Postitoimipaikat" />
             <End Role="Tilaukset" EntitySet="Tilaukset" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tilaukset_Tilausrivit" Association="Self.FK_Tilaukset_Tilausrivit">
-            <End Role="Tilausrivit" EntitySet="Tilausrivit" />
+          <AssociationSet Name="FK_Tilausrivit_Tilaukset" Association="Self.FK_Tilausrivit_Tilaukset">
             <End Role="Tilaukset" EntitySet="Tilaukset" />
+            <End Role="Tilausrivit" EntitySet="Tilausrivit" />
           </AssociationSet>
           <AssociationSet Name="FK_Tilausrivit_Tuotteet" Association="Self.FK_Tilausrivit_Tuotteet">
             <End Role="Tuotteet" EntitySet="Tuotteet" />
@@ -220,18 +254,18 @@
           <Property Name="Toimituspvm" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Asiakkaat" Relationship="Self.FK_Tilaukset_Asiakkaat" FromRole="Tilaukset" ToRole="Asiakkaat" />
           <NavigationProperty Name="Postitoimipaikat" Relationship="Self.FK_Tilaukset_Postitoimipaikat" FromRole="Tilaukset" ToRole="Postitoimipaikat" />
-          <NavigationProperty Name="Tilausrivit" Relationship="Self.FK_Tilaukset_Tilausrivit" FromRole="Tilaukset" ToRole="Tilausrivit" />
+          <NavigationProperty Name="Tilausrivit" Relationship="Self.FK_Tilausrivit_Tilaukset" FromRole="Tilaukset" ToRole="Tilausrivit" />
         </EntityType>
         <EntityType Name="Tilausrivit">
           <Key>
-            <PropertyRef Name="TilausID" />
+            <PropertyRef Name="TilausriviID" />
           </Key>
           <Property Name="TilausriviID" Type="Int32" Nullable="false" />
           <Property Name="TilausID" Type="Int32" Nullable="false" />
           <Property Name="TuoteID" Type="Int32" Nullable="false" />
           <Property Name="Maara" Type="Int32" />
           <Property Name="Ahinta" Type="Decimal" Precision="19" Scale="4" />
-          <NavigationProperty Name="Tilaukset" Relationship="Self.FK_Tilaukset_Tilausrivit" FromRole="Tilausrivit" ToRole="Tilaukset" />
+          <NavigationProperty Name="Tilaukset" Relationship="Self.FK_Tilausrivit_Tilaukset" FromRole="Tilausrivit" ToRole="Tilaukset" />
           <NavigationProperty Name="Tuotteet" Relationship="Self.FK_Tilausrivit_Tuotteet" FromRole="Tilausrivit" ToRole="Tuotteet" />
         </EntityType>
         <EntityType Name="Tuotteet">
@@ -244,6 +278,22 @@
           <Property Name="Kuva" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="Kuvalinkki" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Tilausrivit" Relationship="Self.FK_Tilausrivit_Tuotteet" FromRole="Tuotteet" ToRole="Tilausrivit" />
+        </EntityType>
+        <EntityType Name="Product_Sales_forAllTimes">
+          <Key>
+            <PropertyRef Name="rowid" />
+          </Key>
+          <Property Name="rowid" Type="Int64" Nullable="false" />
+          <Property Name="Nimi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProductSales" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="ProductSales10Best_forAllTimes">
+          <Key>
+            <PropertyRef Name="rowid" />
+          </Key>
+          <Property Name="rowid" Type="Int64" Nullable="false" />
+          <Property Name="Nimi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProductSales" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
         <Association Name="FK_Asiakkaat_Postitoimipaikat">
           <End Role="Postitoimipaikat" Type="Self.Postitoimipaikat" Multiplicity="0..1" />
@@ -281,14 +331,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tilaukset_Tilausrivit">
-          <End Role="Tilausrivit" Type="Self.Tilausrivit" Multiplicity="1" />
-          <End Role="Tilaukset" Type="Self.Tilaukset" Multiplicity="0..1" />
+        <Association Name="FK_Tilausrivit_Tilaukset">
+          <End Role="Tilaukset" Type="Self.Tilaukset" Multiplicity="1" />
+          <End Role="Tilausrivit" Type="Self.Tilausrivit" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Tilausrivit">
+            <Principal Role="Tilaukset">
               <PropertyRef Name="TilausID" />
             </Principal>
-            <Dependent Role="Tilaukset">
+            <Dependent Role="Tilausrivit">
               <PropertyRef Name="TilausID" />
             </Dependent>
           </ReferentialConstraint>
@@ -301,7 +351,7 @@
               <PropertyRef Name="TuoteID" />
             </Principal>
             <Dependent Role="Tilausrivit">
-              <PropertyRef Name="TuoteID" />
+              <PropertyRef Name="TilausID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -313,6 +363,8 @@
           <EntitySet Name="Tilaukset" EntityType="Self.Tilaukset" />
           <EntitySet Name="Tilausrivit" EntityType="Self.Tilausrivit" />
           <EntitySet Name="Tuotteet" EntityType="Self.Tuotteet" />
+          <EntitySet Name="Product_Sales_forAllTimes" EntityType="Self.Product_Sales_forAllTimes" />
+          <EntitySet Name="ProductSales10Best_forAllTimes" EntityType="Self.ProductSales10Best_forAllTimes" />
           <AssociationSet Name="FK_Asiakkaat_Postitoimipaikat" Association="Self.FK_Asiakkaat_Postitoimipaikat">
             <End Role="Postitoimipaikat" EntitySet="Postitoimipaikat" />
             <End Role="Asiakkaat" EntitySet="Asiakkaat" />
@@ -325,9 +377,9 @@
             <End Role="Postitoimipaikat" EntitySet="Postitoimipaikat" />
             <End Role="Tilaukset" EntitySet="Tilaukset" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tilaukset_Tilausrivit" Association="Self.FK_Tilaukset_Tilausrivit">
-            <End Role="Tilausrivit" EntitySet="Tilausrivit" />
+          <AssociationSet Name="FK_Tilausrivit_Tilaukset" Association="Self.FK_Tilausrivit_Tilaukset">
             <End Role="Tilaukset" EntitySet="Tilaukset" />
+            <End Role="Tilausrivit" EntitySet="Tilausrivit" />
           </AssociationSet>
           <AssociationSet Name="FK_Tilausrivit_Tuotteet" Association="Self.FK_Tilausrivit_Tuotteet">
             <End Role="Tuotteet" EntitySet="Tuotteet" />
@@ -412,6 +464,24 @@
                 <ScalarProperty Name="Ahinta" ColumnName="Ahinta" />
                 <ScalarProperty Name="Kuva" ColumnName="Kuva" />
                 <ScalarProperty Name="Kuvalinkki" ColumnName="Kuvalinkki" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product_Sales_forAllTimes">
+            <EntityTypeMapping TypeName="VillaOyModel.Product_Sales_forAllTimes">
+              <MappingFragment StoreEntitySet="Product Sales forAllTimes">
+                <ScalarProperty Name="rowid" ColumnName="rowid" />
+                <ScalarProperty Name="Nimi" ColumnName="Nimi" />
+                <ScalarProperty Name="ProductSales" ColumnName="ProductSales" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductSales10Best_forAllTimes">
+            <EntityTypeMapping TypeName="VillaOyModel.ProductSales10Best_forAllTimes">
+              <MappingFragment StoreEntitySet="ProductSales10Best forAllTimes">
+                <ScalarProperty Name="rowid" ColumnName="rowid" />
+                <ScalarProperty Name="Nimi" ColumnName="Nimi" />
+                <ScalarProperty Name="ProductSales" ColumnName="ProductSales" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

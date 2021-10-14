@@ -168,6 +168,12 @@
     <Compile Include="Models\Postitoimipaikat.cs">
       <DependentUpon>VillaOyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductSales10Best_forAllTimes.cs">
+      <DependentUpon>VillaOyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Product_Sales_forAllTimes.cs">
+      <DependentUpon>VillaOyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Tilaukset.cs">
       <DependentUpon>VillaOyModel.tt</DependentUpon>
     </Compile>
@@ -248,6 +254,12 @@
     <Content Include="Scripts\esm\popper.js.map" />
     <Content Include="Scripts\esm\popper-utils.min.js.map" />
     <Content Include="Scripts\esm\popper-utils.js.map" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.css.map" />
+    <Content Include="Content\bootstrap-grid.min.css.map" />
+    <Content Include="Content\bootstrap-grid.css.map" />
     <EntityDeploy Include="Models\VillaOyModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>VillaOyModel.Designer.cs</LastGenOutput>
@@ -255,12 +267,6 @@
     <Content Include="Models\VillaOyModel.edmx.diagram">
       <DependentUpon>VillaOyModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-reboot.min.css.map" />
-    <Content Include="Content\bootstrap-reboot.css.map" />
-    <Content Include="Content\bootstrap-grid.min.css.map" />
-    <Content Include="Content\bootstrap-grid.css.map" />
     <None Include="Properties\PublishProfiles\VillaOy - Web Deploy.pubxml" />
     <Content Include="Scripts\bootstrap.min.js.map" />
     <Content Include="Scripts\bootstrap.js.map" />
